@@ -22,4 +22,4 @@ EXPOSE 8081
 LABEL authors="Leonardo Barreto"
 LABEL version="0.1.0"
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]v

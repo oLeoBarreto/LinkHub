@@ -1,0 +1,41 @@
+version: "3.5"
+
+services: 
+  database: 
+    image: postgres:15-alpine
+    container_name: linkhub_db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=linkhub
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+  
+  shortener-service:
+    image: shortener-service:0.1.0
+    container_name: shortener-service
+    ports:
+      - 8080:8080
+    environment:
+      - DB_URL=jdbc:postgresql://database:5432/linkhub
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+    depends_on:
+      - database
+
+  analytics-service:
+    image: analytics-service:0.1.0
+    container_name: analytics-service
+    ports:
+      - 8081:8081
+    environment:
+      - DB_URL=jdbc:postgresql://database:5432/linkhub
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:

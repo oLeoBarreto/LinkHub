@@ -3,4 +3,9 @@ ktor:
         modules:
             - com.leobarreto.ApplicationKt.module
     deployment:
-        port: ${PORT:8081}
+        port: ${PORT:8081
+
+postgres:
+    url: ${DB_URL}
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
