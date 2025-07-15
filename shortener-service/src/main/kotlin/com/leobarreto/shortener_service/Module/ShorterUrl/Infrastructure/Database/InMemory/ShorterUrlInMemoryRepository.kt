@@ -1,11 +1,11 @@
-package com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Database
+package com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Database.InMemory
 
 import com.leobarreto.shortener_service.Module.ShorterUrl.Domain.ShorterUrl
 import org.springframework.stereotype.Component
 import java.util.concurrent.ConcurrentHashMap
 
 @Component
-class ShorterIUrlRepository {
+class ShorterUrlInMemoryRepository {
     var repository: ConcurrentHashMap<String, String> = ConcurrentHashMap<String, String>();
 
     fun save(key: String, originalUrl: String): ShorterUrl {
