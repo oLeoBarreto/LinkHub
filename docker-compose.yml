@@ -37,5 +37,15 @@ services:
     depends_on:
       - database
 
+  jenkins:
+    container_name: jenkins
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    volumes:
+      - jekins_data:/var/jenkins_home
+
 volumes:
   postgres_data:
+  jekins_data:
