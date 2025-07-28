@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 @AllArgsConstructor
 class FindOriginalUrlService(val repository: ShorterUrlRepository): IFindOriginalUrlContract {
     override fun findOriginalUrl(shortId: String): FindOriginalUrlResponseDto {
-        var shorterUrl = repository.findById(shortId).orElseThrow();
+        val shorterUrl = repository.findById(shortId).orElseThrow();
 
         return FindOriginalUrlResponseDto(shorterUrl.originalUrl);
     }

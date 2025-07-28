@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service
 @AllArgsConstructor
 class CreateShorterUrlService(val repository: ShorterUrlRepository): ICreateShorterUrlContract {
     override fun CreateNewShorterUrl(data: CreateShorterUrlDto): CreateShorterUrlResponseDto {
-        var alphabet: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        var generatedId: String = generateRandomString(8,alphabet);
+        val alphabet: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        val generatedId: String = generateRandomString(8,alphabet);
 
         repository.save(ShorterUrl(generatedId, data.originalUrl));
 
