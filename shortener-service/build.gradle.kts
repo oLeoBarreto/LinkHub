@@ -5,6 +5,11 @@ plugins {
 	kotlin("plugin.allopen") version "1.9.25"
 	id("org.springframework.boot") version "3.5.3"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("io.gitlab.arturbosch.detekt") version("1.23.6")
+}
+
+apply {
+	from("./config/detekt/detekt.gradle")
 }
 
 group = "com.leobarreto"
@@ -19,6 +24,14 @@ java {
 configurations {
 	compileOnly {
 		extendsFrom(configurations.annotationProcessor.get())
+	}
+}
+
+configurations.all {
+	resolutionStrategy.eachDependency {
+		if (requested.group == "org.jetbrains.kotlin") {
+			useVersion(io.gitlab.arturbosch.detekt.getSupportedKotlinVersion())
+		}
 	}
 }
 
@@ -58,4 +71,14 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+	reports {
+		xml.required.set(false)
+		html.required.set(true)
+		txt.required.set(true)
+		sarif.required.set(false)
+		md.required.set(false)
+	}
 }
