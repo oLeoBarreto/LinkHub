@@ -17,7 +17,7 @@ COPY settings.gradle.kts .
 COPY src src
 
 #Execute the build of project (-x test, will skip the tests) to generate JAR
-RUN ./gradlew build -x test --no-daemon
+RUN ./gradlew -x test -x detekt --no-daemon
 # -------------------------------------------- #
 
 # Using eclipse-temurin runtime image
@@ -34,7 +34,7 @@ EXPOSE 8080
 
 #Define author and version label
 LABEL authors="Leonardo Barreto"
-LABEL version="0.1.0"
+LABEL version="0.2.0"
 
 #Define commands executed when the container starts
 ENTRYPOINT ["java", "-jar", "app.jar"]
