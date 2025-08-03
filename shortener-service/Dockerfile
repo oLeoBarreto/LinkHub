@@ -12,12 +12,13 @@ COPY gradlew .
 COPY gradle gradle
 COPY build.gradle.kts .
 COPY settings.gradle.kts .
+COPY config config
 
 #Copy the code
 COPY src src
 
-#Execute the build of project (-x test, will skip the tests) to generate JAR
-RUN ./gradlew -x test -x detekt --no-daemon
+#Execute the build of project (-x, will skip the tests and detekt script) to generate JAR
+RUN ./gradlew build -x test -x detekt --no-daemon
 # -------------------------------------------- #
 
 # Using eclipse-temurin runtime image
