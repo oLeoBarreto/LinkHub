@@ -14,10 +14,10 @@ services:
       - postgres_data:/var/lib/postgresql/data 
   
   shortener-service:
-    image: shortener-service:0.1.0
+    image: leobarreto/shortener-service:0.2.0
     container_name: shortener-service
     ports:
-      - 8080:8080
+      - 8080:8082
     environment:
       - DB_URL=jdbc:postgresql://database:5432/linkhub
       - DB_USER=admin
@@ -26,7 +26,7 @@ services:
       - database
 
   analytics-service:
-    image: analytics-service:0.1.0
+    image: leobarreto/analytics-service:0.1.0
     container_name: analytics-service
     ports:
       - 8081:8081
@@ -43,9 +43,18 @@ services:
       context: .
     ports:
       - 8080:8080
+    user: root
     volumes:
       - jekins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jenkins
 
 volumes:
   postgres_data:
   jekins_data:
+
+networks:
+  jenkins:
+    driver: bridge
+    
