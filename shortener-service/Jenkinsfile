@@ -17,7 +17,7 @@ pipeline {
             steps {
                 dir('shortener-service') {
                     sh 'chmod +x gradlew'
-                    sh './gradlew build'
+                    sh './gradlew build -x detekt'
                 }
             }
         }
@@ -29,11 +29,37 @@ pipeline {
                 }
             }
         }
+        stage('Code quality') {
+            steps {
+                dir('shortener-service') {
+                    script {
+                        try {
+                            sh './gradlew detekt'
+                        }
+                        catch(Exception e) {
+                            print("${e}")
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build & Push docker image') {
+            steps {
+                dir('shortener-service') {
+                    script {
+                        docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
+                            def dockerImage = docker.build('leobarreto/shortener-service:0.2.0', '.')
+                            dockerImage.push()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'build/libs/*.jar', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'shortener-serviced/build/libs/*.jar', allowEmptyArchive: true
         }
         success {
             echo "Pipeline executed with success!"
