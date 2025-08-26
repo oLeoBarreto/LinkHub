@@ -9,7 +9,7 @@ import org.koin.ktor.ext.inject
 import kotlin.getValue
 
 val coroutineModule = module {
-    single { QueueStartingRoutine(get()) }
+    single { QueueStartingRoutine(get(), get()) }
 }
 
 fun Application.configureCoroutineModule() {

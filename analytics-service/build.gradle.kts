@@ -30,6 +30,7 @@ dependencies {
     implementation("io.insert-koin:koin-logger-slf4j:3.5.6")
     implementation(platform("software.amazon.awssdk:bom:2.20.28"))
     implementation("software.amazon.awssdk:sqs")
+    implementation("software.amazon.awssdk:dynamodb")
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }

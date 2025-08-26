@@ -8,16 +8,18 @@ import org.koin.ktor.plugin.Koin
 import org.koin.dsl.module
 import org.koin.logger.slf4jLogger
 
-fun Application.configureAwsModules() {
+fun Application.configureCustomModules() {
     install(Koin) {
         slf4jLogger()
         modules(
             module {
                 single { awsConfig() }
                 single { get<AwsConfig>().SqsClient() }
+                single { get<AwsConfig>().DynamoDbClient() }
                 single { SqsQueueConsumer(get()) }
             }
         )
         modules(coroutineModule)
+        modules(ClickedUrlModule)
     }
 }

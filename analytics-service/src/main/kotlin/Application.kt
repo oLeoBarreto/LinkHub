@@ -1,7 +1,7 @@
 package com.leobarreto
 
-import com.leobarreto.Shared.Modules.configureAwsModules
 import com.leobarreto.Shared.Modules.configureCoroutineModule
+import com.leobarreto.Shared.Modules.configureCustomModules
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
@@ -11,6 +11,6 @@ fun main(args: Array<String>) {
 fun Application.module() {
     configureSerialization()
     configureRouting()
-    configureAwsModules()
+    configureCustomModules()
     configureCoroutineModule()
 }
