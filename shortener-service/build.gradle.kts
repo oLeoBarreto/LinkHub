@@ -3,6 +3,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.25"
 	kotlin("plugin.jpa") version "1.9.25"
 	kotlin("plugin.allopen") version "1.9.25"
+	kotlin("plugin.serialization") version "1.9.25"
 	id("org.springframework.boot") version "3.5.3"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("io.gitlab.arturbosch.detekt") version("1.23.6")
@@ -54,6 +55,9 @@ dependencies {
 	implementation("org.springframework:spring-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+	implementation(platform("software.amazon.awssdk:bom:2.20.28"))
+	implementation("software.amazon.awssdk:sqs")
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

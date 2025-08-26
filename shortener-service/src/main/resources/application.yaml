@@ -12,3 +12,13 @@ spring:
 
 server:
   port: ${PORT:8080}
+
+cloud:
+  aws:
+    region:
+      static: ${AWS_REGION}
+    sqs:
+      endpoint: ${AWS_CUSTOM_ENDPOINT}
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
