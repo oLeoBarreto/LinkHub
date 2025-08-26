@@ -13,7 +13,7 @@ class SaveClickedUrlService(val dynamoDbClient: DynamoDbClient): ISaveClickedUrl
         val item = mutableMapOf<String, AttributeValue>();
 
         item["ShortCode"] = AttributeValue.fromS(clickedUrl.shortCode);
-        item["ClickTimestamp"] = AttributeValue.fromS(clickedUrl.clickTimestamp.toString());
+        item["ClickTimestamp"] = AttributeValue.fromS(clickedUrl.clickTimestamp);
 
         val request = PutItemRequest.builder()
             .tableName(tableName)
