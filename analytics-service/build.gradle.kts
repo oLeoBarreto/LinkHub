@@ -24,8 +24,6 @@ dependencies {
     implementation(libs.ktor.server.netty)
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.config.yaml)
-    implementation(libs.exposed.jdbc)
-    implementation(libs.postgresql)
     implementation("io.insert-koin:koin-ktor:3.5.6")
     implementation("io.insert-koin:koin-logger-slf4j:3.5.6")
     implementation(platform("software.amazon.awssdk:bom:2.20.28"))
