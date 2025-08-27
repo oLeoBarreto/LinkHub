@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.leobarreto"
-version = "0.1.0"
+version = "1.0.0"
 
 application {
     mainClass = "io.ktor.server.netty.EngineMain"

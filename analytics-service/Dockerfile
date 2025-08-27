@@ -20,6 +20,6 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8081
 
 LABEL authors="Leonardo Barreto"
-LABEL version="0.1.0"
+LABEL version="1.0.0"
 
-ENTRYPOINT ["java", "-jar", "app.jar"]v
+ENTRYPOINT ["java", "-jar", "app.jar"]
