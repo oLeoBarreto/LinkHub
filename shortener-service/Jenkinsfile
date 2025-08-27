@@ -43,12 +43,17 @@ pipeline {
                 }
             }
         }
+        stage('Approve for publish on DockerHub') {
+            steps {
+                input message:'Build docker image and publish to DockerHub?', ok: 'Yes, build it!', cancel: 'No, skip this step!'
+            }
+        }
         stage('Build & Push docker image') {
             steps {
                 dir('shortener-service') {
                     script {
                         docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
-                            def dockerImage = docker.build('leobarreto/shortener-service:0.2.0', '.')
+                            def dockerImage = docker.build('leobarreto/shortener-service:1.0.0', '.')
                             dockerImage.push()
                         }
                     }
