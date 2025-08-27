@@ -8,16 +8,21 @@ import com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Databas
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
+import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
+import java.util.Optional
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 
 class FindOriginalUrlServiceTest {
-    private val repository: ShorterUrlRepository = ShorterUrlInMemoryRepository()
+    private val repository = mock<ShorterUrlRepository>();
     private val findOriginalUrlService: IFindOriginalUrlContract = FindOriginalUrlService(repository);
 
     @BeforeEach
     fun setUp() {
-        repository.save(ShorterUrl("key123", "http://originalurl.com"));
+        whenever(repository.findById("key123")).thenReturn(Optional.of<ShorterUrl>(ShorterUrl("key123", "http://originalurl.com")));
     }
 
     @Test
