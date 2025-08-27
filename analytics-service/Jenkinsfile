@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[
+                        url: 'git@github.com:oLeoBarreto/LinkHub.git',
+                        credentialsId: 'Github'
+                    ]]
+                ])
+            }
+        }
+        stage('Build') {
+            steps {
+                dir('analytics-service') {
+                    sh 'chmod +x gradlew'
+                    sh './gradlew build'
+                }
+            }
+        }
+        stage('Approve for publish on DockerHub') {
+            steps {
+                input message:'Build docker image and publish to DockerHub?', ok: 'Yes, build it!', cancel: 'No, skip this step!'
+            }
+        }
+        stage('Build & Push docker image') {
+            steps {
+                dir('analytics-serivice') {
+                    script {
+                        docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
+                            def dockerImage = docker.build('leobarreto/analytics-service:1.0.0', '.')
+                            dockerImage.push()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'analytics-service/build/libs/*.jar', allowEmptyArchive: true
+        }
+        success {
+            echo "Pipeline executed with success!"
+        }
+        failure {
+            echo "Pipeline failure!"
+        }
+    }
+}
