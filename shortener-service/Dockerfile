@@ -35,7 +35,7 @@ EXPOSE 8080
 
 #Define author and version label
 LABEL authors="Leonardo Barreto"
-LABEL version="0.2.0"
+LABEL version="1.0.0"
 
 #Define commands executed when the container starts
 ENTRYPOINT ["java", "-jar", "app.jar"]
