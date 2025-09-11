@@ -1,41 +1,31 @@
 version: "3.5"
 
 services: 
-  database: 
-    image: postgres:15-alpine
-    container_name: linkhub_db
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=linkhub
-    volumes:
-      - postgres_data:/var/lib/postgresql/data 
-  
   shortener-service:
-    image: leobarreto/shortener-service:0.2.0
+    image: leobarreto/shortener-service:1.0.0
     container_name: shortener-service
     ports:
-      - 8080:8082
+      - 8082:8082
     environment:
-      - DB_URL=jdbc:postgresql://database:5432/linkhub
+      - DB_URL=jdbc:postgresql://host.docker.internal:4510/linkhub_db
       - DB_USER=admin
       - DB_PASSWORD=admin
-    depends_on:
-      - database
+      - AWS_ACCESS_KEY=mock_access_key
+      - AWS_SECRET_KEY=mock_secret_key
+      - AWS_REGION=us-east-1
+      - AWS_CUSTOM_ENDPOINT=http://host.docker.internal:4566
+      - PORT=8082
 
   analytics-service:
-    image: leobarreto/analytics-service:0.1.0
+    image: leobarreto/analytics-service:1.0.0
     container_name: analytics-service
     ports:
       - 8081:8081
     environment:
-      - DB_URL=jdbc:postgresql://database:5432/linkhub
-      - DB_USER=admin
-      - DB_PASSWORD=admin
-    depends_on:
-      - database
+      - AWS_ACCESS_KEY=mock_access_key
+      - AWS_SECRET_KEY=mock_secret_key
+      - AWS_REGION=us-east-1
+      - AWS_CUSTOM_ENDPOINT=http://host.docker.internal:4566
 
   jenkins:
     container_name: jenkins
