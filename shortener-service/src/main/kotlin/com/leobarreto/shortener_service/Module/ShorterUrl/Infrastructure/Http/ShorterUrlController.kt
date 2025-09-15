@@ -7,6 +7,7 @@ import com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Respons
 import com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Response.FindOriginalUrlResponseDto
 import com.leobarreto.shortener_service.Shared.Queue.IQueueSender
 import com.leobarreto.shortener_service.Shared.Queue.QueueMessageDto
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,8 +26,8 @@ class ShorterUrlController (val createService: ICreateShorterUrlContract, val fi
 
     @PostMapping("/links")
     @ResponseStatus(HttpStatus.OK)
-    override fun postNewShorterUrl(@RequestBody data: CreateShorterUrlDto): CreateShorterUrlResponseDto {
-        return createService.CreateNewShorterUrl(data);
+    override fun postNewShorterUrl(@RequestBody data: CreateShorterUrlDto, request: HttpServletRequest): CreateShorterUrlResponseDto {
+        return createService.CreateNewShorterUrl(data, request.remoteAddr.toString());
     }
 
     @GetMapping()

@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service
 @RequiredArgsConstructor
 @AllArgsConstructor
 class CreateShorterUrlService(val repository: ShorterUrlRepository): ICreateShorterUrlContract {
-    override fun CreateNewShorterUrl(data: CreateShorterUrlDto): CreateShorterUrlResponseDto {
+    override fun CreateNewShorterUrl(data: CreateShorterUrlDto, shortedByIP: String): CreateShorterUrlResponseDto {
         val alphabet: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
         val generatedId: String = generateRandomString(8,alphabet);
 
-        repository.save(ShorterUrl(generatedId, data.originalUrl));
+        val shorterUrl = ShorterUrl(generatedId, data.originalUrl);
+        shorterUrl.shortedByIP = shortedByIP;
+        repository.save(shorterUrl);
 
         return CreateShorterUrlResponseDto(generatedId);
     }

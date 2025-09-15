@@ -4,5 +4,5 @@ import com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Request
 import com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Response.CreateShorterUrlResponseDto
 
 interface ICreateShorterUrlContract {
-    fun CreateNewShorterUrl(data: CreateShorterUrlDto): CreateShorterUrlResponseDto;
+    fun CreateNewShorterUrl(data: CreateShorterUrlDto, shortedByIP: String): CreateShorterUrlResponseDto;
 }
