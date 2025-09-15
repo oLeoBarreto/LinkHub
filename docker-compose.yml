@@ -40,9 +40,23 @@ services:
     networks:
       - jenkins
 
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana-service
+    restart: unless-stopped
+    environment:
+      - GF_AUTH_ANONYMOUS=false
+      - GF_SECURITY_ALLOW_EMVEDDING=true
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+
 volumes:
   postgres_data:
   jekins_data:
+  grafana_data:
 
 networks:
   jenkins:
