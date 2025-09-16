@@ -15,6 +15,8 @@ services:
       - AWS_REGION=us-east-1
       - AWS_CUSTOM_ENDPOINT=http://host.docker.internal:4566
       - PORT=8082
+    networks:
+      - linkhub
 
   analytics-service:
     image: leobarreto/analytics-service:1.0.0
@@ -26,6 +28,8 @@ services:
       - AWS_SECRET_KEY=mock_secret_key
       - AWS_REGION=us-east-1
       - AWS_CUSTOM_ENDPOINT=http://host.docker.internal:4566
+    networks:
+      - linkhub
 
   jenkins:
     container_name: jenkins
@@ -38,7 +42,7 @@ services:
       - jekins_data:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - jenkins
+      - linkhub
 
   grafana:
     image: grafana/grafana-enterprise
@@ -51,14 +55,27 @@ services:
       - 3000:3000
     volumes:
       - grafana_data:/var/lib/grafana
-
+    networks:
+      - linkhub
+  
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus-service
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - linkhub
 
 volumes:
   postgres_data:
   jekins_data:
   grafana_data:
+  prometheus_data:
 
 networks:
-  jenkins:
+  linkhub:
     driver: bridge
     
