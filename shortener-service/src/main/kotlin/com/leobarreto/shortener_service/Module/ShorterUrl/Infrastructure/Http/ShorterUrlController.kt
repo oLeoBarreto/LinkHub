@@ -7,6 +7,8 @@ import com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Respons
 import com.leobarreto.shortener_service.Module.ShorterUrl.Infrastructure.Response.FindOriginalUrlResponseDto
 import com.leobarreto.shortener_service.Shared.Queue.IQueueSender
 import com.leobarreto.shortener_service.Shared.Queue.QueueMessageDto
+import io.micrometer.core.annotation.Counted
+import io.micrometer.core.annotation.Timed
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
@@ -26,12 +28,16 @@ class ShorterUrlController (val createService: ICreateShorterUrlContract, val fi
 
     @PostMapping("/links")
     @ResponseStatus(HttpStatus.OK)
+    @Counted(value = "shorter.url.create.request.total", description = "Total of requests", extraTags = ["/shorterUrl/links", "POST"])
+    @Timed(value = "shorter.url.create.request.time", description = "Time spent to process request", extraTags = ["/shorterUrl/links", "POST"])
     override fun postNewShorterUrl(@RequestBody data: CreateShorterUrlDto, request: HttpServletRequest): CreateShorterUrlResponseDto {
         return createService.CreateNewShorterUrl(data, request.remoteAddr.toString());
     }
 
     @GetMapping()
     @ResponseStatus(HttpStatus.FOUND)
+    @Counted(value = "shorter.url.findUrl.request.total", description = "Total of requests", extraTags = ["/shorterUrl", "GET"])
+    @Timed(value = "shorter.url.findUrl.request.time", description = "Time spent to process request", extraTags = ["/shorterUrl", "GET"])
     override fun getOriginalUrl(@RequestParam shortId: String): FindOriginalUrlResponseDto {
         queueSender.sendMessage(QueueMessageDto(shortId, LocalDateTime.now().toString()));
         return findUrlService.findOriginalUrl(shortId);
