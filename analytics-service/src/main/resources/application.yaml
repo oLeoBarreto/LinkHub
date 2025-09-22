@@ -10,3 +10,12 @@ aws:
     secret_key: ${AWS_SECRET_KEY}
     region: ${AWS_REGION}
     custom_endpoint: ${AWS_CUSTOM_ENDPOINT:""}
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: prometheus
+    metrics:
+        tags:
+            application: analytics-service

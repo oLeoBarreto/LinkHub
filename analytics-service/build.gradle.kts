@@ -13,6 +13,7 @@ application {
 
 repositories {
     mavenCentral()
+
 }
 
 dependencies {
@@ -29,6 +30,9 @@ dependencies {
     implementation(platform("software.amazon.awssdk:bom:2.20.28"))
     implementation("software.amazon.awssdk:sqs")
     implementation("software.amazon.awssdk:dynamodb")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.13.4")
+    implementation("io.micrometer:micrometer-registry-prometheus-simpleclient:1.13.4")
+    implementation("com.github.loki4j:loki-logback-appender:2.0.0")
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }

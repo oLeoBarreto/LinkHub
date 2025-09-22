@@ -2,7 +2,11 @@ global:
   scrape_interval: 15s 
 
 scrape_configs:
-  - job_name: "shortener-servicec"
+  - job_name: "shortener-service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["host.docker.internal:8080", "host.docker.internal:8081", "host.docker.internal:8082"]
+  - job_name: "analytics-service"
     metrics_path: "/actuator/prometheus"
     static_configs:
       - targets: ["host.docker.internal:8080", "host.docker.internal:8081", "host.docker.internal:8082"]
