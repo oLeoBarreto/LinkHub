@@ -23,7 +23,7 @@ class ShorterUrlControllerTest {
     @BeforeEach
     fun setUp() {
         createService = mock<CreateShorterUrlService> {
-            on { CreateNewShorterUrl(any<CreateShorterUrlDto>()) } doReturn CreateShorterUrlResponseDto("Key12345")
+            on { CreateNewShorterUrl(any<CreateShorterUrlDto>(), any<String>()) } doReturn CreateShorterUrlResponseDto("Key12345")
         }
 
         findUrlService = mock<FindOriginalUrlService> {
@@ -41,7 +41,7 @@ class ShorterUrlControllerTest {
 
     @Test
     fun tryPostNewShortUrl() {
-        val shorterUrlResponse = createService.CreateNewShorterUrl(CreateShorterUrlDto("http://originalurl.com"));
+        val shorterUrlResponse = createService.CreateNewShorterUrl(CreateShorterUrlDto("http://originalurl.com"), "127.0.0.1");
 
         assertInstanceOf<CreateShorterUrlResponseDto>(shorterUrlResponse);
         assertEquals("Key12345", shorterUrlResponse.shortId);

@@ -30,14 +30,14 @@ class CreateShorterUrlTest {
 
     @Test
     fun tryCreateNewShortUrl() {
-        val newShortUrl = createShorterUrl.CreateNewShorterUrl(CreateShorterUrlDto("http://originalurl.com"));
+        val newShortUrl = createShorterUrl.CreateNewShorterUrl(CreateShorterUrlDto("http://originalurl.com"), "127.0.0.1");
         assertNotNull(newShortUrl);
         assertInstanceOf<CreateShorterUrlResponseDto>(newShortUrl);
     }
 
     @Test
     fun verifyGeneratedKey() {
-        val newShortUrl = createShorterUrl.CreateNewShorterUrl(CreateShorterUrlDto("http://originalurl.com"));
+        val newShortUrl = createShorterUrl.CreateNewShorterUrl(CreateShorterUrlDto("http://originalurl.com"), "127.0.0.1");
 
         assertEquals(8, newShortUrl.shortId.length);
         assertDoesNotThrow {
