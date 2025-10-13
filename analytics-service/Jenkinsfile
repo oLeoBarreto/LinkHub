@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment  {
+        VERSION = '1.1.0'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -31,7 +35,7 @@ pipeline {
                 dir('analytics-serivice') {
                     script {
                         docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
-                            def dockerImage = docker.build('leobarreto/analytics-service:1.0.0', '.')
+                            def dockerImage = docker.build('leobarreto/analytics-service:${VERSION}', '.')
                             dockerImage.push()
                         }
                     }
