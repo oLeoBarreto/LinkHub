@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        VERSION = '1.1.0'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -57,7 +53,7 @@ pipeline {
                 dir('shortener-service') {
                     script {
                         docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
-                            def dockerImage = docker.build('leobarreto/shortener-service:${VERSION}', '.')
+                            def dockerImage = docker.build('leobarreto/shortener-service:1.1.1', '.')
                             dockerImage.push()
                         }
                     }
